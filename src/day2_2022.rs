@@ -1,5 +1,5 @@
 
-pub fn calculate_score(input: Vec<String>) -> u32{
+pub fn calculate_score1(input: Vec<String>) -> u32{
     let mut score: u32 = 0;
     for line in input {    
         let line_as_vec_chars: Vec<char> = line.chars().collect();
@@ -40,15 +40,64 @@ pub fn calculate_score(input: Vec<String>) -> u32{
     score
 }
 
+pub fn calculate_score2(input: Vec<String>) -> u32{
+    let mut score: u32 = 0;
+    for line in input {    
+        let line_as_vec_chars: Vec<char> = line.chars().collect();
+        let opponet_play = line_as_vec_chars[0];
+        let my_play = line_as_vec_chars[2];
+
+        match my_play {
+            'X' => {
+                match opponet_play {
+                    'A' => score += 3,
+                    'B' => score += 1,
+                    'C' => score += 2,
+                    _ => (),
+                };
+            },
+            'Y' => {
+                let round_score = 3;
+                match opponet_play {
+                    'A' => score += 1 + round_score,
+                    'B' => score += 2 + round_score,
+                    'C' => score += 3 + round_score,
+                    _ => (),
+                };
+            },
+            'Z' => {
+                let round_score = 6;
+                match opponet_play {
+                    'A' => score += 2 + round_score,
+                    'B' => score += 3 + round_score,
+                    'C' => score += 1 + round_score,
+                    _ => (),
+                };
+            }
+            _ => (),
+        }
+    }
+    score
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
 
     #[test]
-    fn score_calulation() {
+    fn score_calulation1() {
         let input = vec!["A Y".to_string(),
                                       "B X".to_string(),
                                       "C Z".to_string()];
-        assert_eq!(calculate_score(input),15)
+        assert_eq!(calculate_score1(input),15)
+    }
+
+    #[test]
+    fn score_calulation2() {
+        let input = vec!["A Y".to_string(),
+                                      "B X".to_string(),
+                                      "C Z".to_string()];
+        assert_eq!(calculate_score2(input),12)
+        
     }
 }
