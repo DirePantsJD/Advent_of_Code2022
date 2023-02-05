@@ -1,4 +1,5 @@
 mod day1_2022;
+mod day2_2022;
 
 use std::{
     env,
@@ -7,18 +8,22 @@ use std::{
     path::Path,
 };
 use day1_2022::{most_calories, top_three_calories_sum};
+use day2_2022::calculate_score;
 
 fn main() {
     let args: Vec<String> = env::args().collect();
     let day = args[1].clone();
     let part = args[2].clone();
     let path = "input/".to_owned() + &(day)[..] + "_input.txt";
-    let lines: Vec<String> = lines_from_file(path);
+    let lines: Vec<String> = lines_from_file(path.clone());
 
     match day.as_str() {
         "day1" => {
-                   if part == "1" {println!("{}",most_calories(lines.clone()))};
-                   if part == "2" {println!("{}",top_three_calories_sum(lines.clone()))}
+                   if part == "1" {println!("Result: {}",most_calories(lines.clone()))};
+                   if part == "2" {println!("Result: {}",top_three_calories_sum(lines.clone()))}
+                  },
+        "day2" => {
+                   if part == "1" {println!("Result: {}",calculate_score(lines.clone()))}
                   },
         _ => (),
     }
