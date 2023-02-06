@@ -35,8 +35,8 @@ fn main() {
                    if part == "2" {println!("Result: {}",sum_badge_priority(lines.clone()))}
                   },
         "day4" => {
-                   if part == "1" {println!("Result: {}",count_redundant_ranges(lines.clone()))}
-                   //if part == "2" {println!("Result: {}",sum_badge_priority(lines.clone()))}
+                   if part == "1" {println!("Result: {}",count_completly_redundant_ranges(lines.clone()))}
+                   if part == "2" {println!("Result: {}",count_partialy_redundant_ranges(lines.clone()))}
                   },
         _ => (),
     }
