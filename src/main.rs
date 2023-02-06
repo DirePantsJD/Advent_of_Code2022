@@ -14,7 +14,7 @@ use day1_2022::*;
 use day2_2022::*;
 use day3_2022::*;
 use day4_2022::*;
-use day5_2022::top_of_stacks;
+use day5_2022::{top_of_stacks, v2_top_of_stacks};
 
 fn main() {
     let args: Vec<String> = env::args().collect();
@@ -42,7 +42,7 @@ fn main() {
                   },
         "day5" => {
                    if part == "1" {println!("Result: {}",top_of_stacks(lines.clone()))}
-                   //if part == "2" {println!("Result: {}",count_partialy_redundant_ranges(lines.clone()))}
+                   if part == "2" {println!("Result: {}",v2_top_of_stacks(lines.clone()))}
                   },
         _ => (),
     }

@@ -26,6 +26,18 @@ impl Stacks {
             self.stacks[crate_move.2-1].push(cr4te);
         }
     }
+
+    pub fn v2_move_crate(&mut self, crate_move: Move) {
+        let mut aux_vec: Vec<char> = Vec::new();
+        for _ in 0..crate_move.0 {
+            let cr4te = self.stacks[crate_move.1-1].pop().unwrap();
+            aux_vec.push(cr4te);
+        }
+        for _ in 0..crate_move.0 {
+            let cr4te = aux_vec.pop().unwrap();
+            self.stacks[crate_move.2-1].push(cr4te);
+        }
+    }
     
     pub fn get_top_of_each(&mut self) -> String {
         let mut top = String::new();
@@ -46,6 +58,19 @@ pub fn top_of_stacks(input: Vec<String>) -> String {
         let to: usize = aux_iter.nth(1).unwrap().parse().unwrap();
         let crate_move = Move(qnt,from,to);
         stacks.move_crate(crate_move);
+    } 
+    stacks.get_top_of_each()
+}
+
+pub fn v2_top_of_stacks(input: Vec<String>) -> String {
+    let mut stacks = Stacks::new();
+    for move_command in input {
+        let mut aux_iter = move_command.split(" ");
+        let qnt: u8 = aux_iter.nth(1).unwrap().parse().unwrap();
+        let from: usize = aux_iter.nth(1).unwrap().parse().unwrap();
+        let to: usize = aux_iter.nth(1).unwrap().parse().unwrap();
+        let crate_move = Move(qnt,from,to);
+        stacks.v2_move_crate(crate_move);
     } 
     stacks.get_top_of_each()
 }
