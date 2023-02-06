@@ -1,3 +1,4 @@
+//day1 fn
 pub fn sum_common_item_priority(input: Vec<String>) -> u32 {
     let mut total = 0;
     for rucksack in input {
@@ -15,9 +16,45 @@ pub fn sum_common_item_priority(input: Vec<String>) -> u32 {
                 break;
             }
         }
-    
     }
     total
+}
+
+//day2 fn
+pub fn sum_badge_priority(input: Vec<String>) -> u32 {
+    let mut total: u32 = 0;
+    let mut count: u8 = 0;
+    let mut group = Vec::new();
+
+    for rucksack in input {
+        if count < 3 {
+            group.push(rucksack);    
+            count += 1;
+        } else {
+            total += get_badge_priority(group.clone());
+            group.clear();
+            group.push(rucksack);
+            count = 1;
+        }
+    }
+    total += get_badge_priority(group.clone());
+
+    total
+}
+
+// aux fns
+fn get_badge_priority(input: Vec<String>) -> u32 {
+    let mut badge_priority: u32 = 0;
+    for item1 in input[0].chars(){
+        for item2 in input[1].chars(){
+            for item3 in input[2].chars(){
+                if item1 == item2 && item2 == item3{
+                    badge_priority = get_priority(item1);
+                }
+            }
+        }
+    } 
+    badge_priority
 }
 
 fn get_priority(ch: char) -> u32 {
@@ -40,9 +77,12 @@ fn get_priority_lc(ch: char) -> u32 {
     }
 }
 
+
+
 #[cfg(test)]
 mod tests {
-    use super::{sum_common_item_priority, get_priority};
+
+    use super::*;
 
 
     #[test]
@@ -66,7 +106,27 @@ mod tests {
     fn sum_common_items_prio_test() {
         let input = vec!["vJrwpWtwJgWrhcsFMMfFFhFp".to_string(),
                                       "jqHRNqRjqzjGDLGLrsFMfFZSrLrFZsSL".to_string()];
-        assert_eq!(sum_common_item_priority(input),16+38);
+        assert_eq!(sum_common_item_priority(input),16 + 38);
     }
+
+    #[test]
+    fn get_badge_prio_test() {
+        let input = vec!["vJrwpWtwJgWrhcsFMMfFFhFp".to_string(),
+                                      "jqHRNqRjqzjGDLGLrsFMfFZSrLrFZsSL".to_string(),
+                                      "PmmdzqPrVvPwwTWBwg".to_string()];
+        assert_eq!(get_badge_priority(input),18);
+    }
+
+    #[test]
+    fn get_badge_prio_sum_test() {
+        let input = vec!["vJrwpWtwJgWrhcsFMMfFFhFp".to_string(),
+                                      "jqHRNqRjqzjGDLGLrsFMfFZSrLrFZsSL".to_string(),
+                                      "PmmdzqPrVvPwwTWBwg".to_string(),
+                                      "wMqvLMZHhHMvwLHjbvcjnnSBnvTQFn".to_string(),
+                                      "ttgJtRGJQctTZtZT".to_string(),
+                                      "CrZsJsPPZsGzwwsLwLmpwMDw".to_string()];
+        assert_eq!(sum_badge_priority(input),18 + 52);
+    }
+
 }
 

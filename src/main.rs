@@ -30,7 +30,7 @@ fn main() {
                   },
         "day3" => {
                    if part == "1" {println!("Result: {}",sum_common_item_priority(lines.clone()))}
-                   //if part == "2" {println!("Result: {}",calculate_score2(lines.clone()))}
+                   if part == "2" {println!("Result: {}",sum_badge_priority(lines.clone()))}
                   },
         _ => (),
     }
