@@ -28,14 +28,13 @@ pub fn sum_badge_priority(input: Vec<String>) -> u32 {
 
     for rucksack in input {
         if count < 3 {
-            group.push(rucksack);    
             count += 1;
         } else {
             total += get_badge_priority(group.clone());
             group.clear();
-            group.push(rucksack);
             count = 1;
         }
+        group.push(rucksack); 
     }
     total += get_badge_priority(group.clone());
 
