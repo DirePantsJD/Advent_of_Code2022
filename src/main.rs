@@ -3,6 +3,7 @@ mod day2_2022;
 mod day3_2022;
 mod day4_2022;
 mod day5_2022;
+mod day6_2022;
 
 use std::{
     env,
@@ -14,7 +15,8 @@ use day1_2022::*;
 use day2_2022::*;
 use day3_2022::*;
 use day4_2022::*;
-use day5_2022::{top_of_stacks, v2_top_of_stacks};
+use day5_2022::*;
+use day6_2022::*;
 
 fn main() {
     let args: Vec<String> = env::args().collect();
@@ -43,6 +45,10 @@ fn main() {
         "day5" => {
                    if part == "1" {println!("Result: {}",top_of_stacks(lines.clone()))}
                    if part == "2" {println!("Result: {}",v2_top_of_stacks(lines.clone()))}
+                  },
+        "day6" => {
+                   if part == "1" {println!("Result: {}",start_of_packet_offset(lines.clone()))}
+                   //if part == "2" {println!("Result: {}",v2_top_of_stacks(lines.clone()))}
                   },
         _ => (),
     }
