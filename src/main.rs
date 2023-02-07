@@ -48,7 +48,7 @@ fn main() {
                   },
         "day6" => {
                    if part == "1" {println!("Result: {}",start_of_packet_offset(lines.clone()))}
-                   //if part == "2" {println!("Result: {}",v2_top_of_stacks(lines.clone()))}
+                   if part == "2" {println!("Result: {}",start_of_message_offset(lines.clone()))}
                   },
         _ => (),
     }

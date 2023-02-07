@@ -34,6 +34,40 @@ fn check_four_chars(four_chars: VecDeque<char>) -> bool {
     false
 }
 
+pub fn start_of_message_offset(input: Vec<String>) -> u16 {
+    let mut offset: u16 = 0;
+    let mut fourteen_chars: VecDeque<char> = VecDeque::new();
+    for char in input[0].chars() {
+        if fourteen_chars.len() == 14 {
+            fourteen_chars.pop_front();
+        }
+        fourteen_chars.push_back(char);
+        offset+=1;
+        if check_fourteen_chars(fourteen_chars.clone()) {
+            break;
+        }
+    }
+    offset 
+}
+
+fn check_fourteen_chars(four_chars: VecDeque<char>) -> bool {
+    let lenght = four_chars.len();
+    if lenght != 14 { 
+        return false;
+    }
+    for idx1 in 0..lenght {
+        if idx1 == lenght - 1 {
+            return true;
+        }
+        for idx2 in (idx1+1)..lenght{
+            if four_chars[idx1] == four_chars[idx2] {
+                return false;
+            }
+        }
+    }
+    false
+}
+
 
 #[cfg(test)]
 mod tests {
