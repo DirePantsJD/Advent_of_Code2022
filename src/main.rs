@@ -4,6 +4,7 @@ mod day3_2022;
 mod day4_2022;
 mod day5_2022;
 mod day6_2022;
+mod day7_2022;
 
 use std::{
     env,
@@ -17,6 +18,7 @@ use day3_2022::*;
 use day4_2022::*;
 use day5_2022::*;
 use day6_2022::*;
+use day7_2022::*;
 
 fn main() {
     let args: Vec<String> = env::args().collect();
@@ -49,6 +51,10 @@ fn main() {
         "day6" => {
                    if part == "1" {println!("Result: {}",start_of_packet_offset(lines.clone()))}
                    if part == "2" {println!("Result: {}",start_of_message_offset(lines.clone()))}
+                  },
+        "day7" => { //todo
+                   if part == "1" {println!("Result: {}",build_and_process_fs(lines.clone()))}
+                   //if part == "2" {println!("Result: {}",start_of_message_offset(lines.clone()))}
                   },
         _ => (),
     }
