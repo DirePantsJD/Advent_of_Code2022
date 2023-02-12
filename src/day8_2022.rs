@@ -16,10 +16,12 @@ pub fn visible_trees(input: Vec<String>) -> u32 {
             let right = &mid_right[1..mid_right.len()];
             let mut counter = n_cols - (col + 1);
             let mut aux_vec = trees.clone();
+
             aux_vec.retain(|_| {counter+=1; counter % n_cols == 0 });
-            // dbg!(aux_vec.clone());
+
             let (up,mid_down)= aux_vec[..].split_at(row);
             let down = &mid_down[1..mid_down.len()];
+
             result += check_tree(trees[row * n_cols + col], left, right, up, down);
         }
     }
@@ -27,11 +29,6 @@ pub fn visible_trees(input: Vec<String>) -> u32 {
 }
 
 fn check_tree(tree: char, left: &[char], right: &[char], up: &[char], down: &[char]) -> u32 {
-    //dbg!(tree);
-    //dbg!(left);
-    //dbg!(right);
-    //dbg!(up);
-    //dbg!(down);
     let mut vec: Vec<bool> = vec![];
     let mut value = true;
     for other_tree in left {
