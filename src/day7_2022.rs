@@ -1,5 +1,8 @@
 use std::vec;
 
+//Does not work 
+//TODO
+
 #[derive(Clone,Debug,PartialEq)]
 enum FileSystemNode {
     Dir {
@@ -15,10 +18,6 @@ enum FileSystemNode {
 impl FileSystemNode {
     pub fn new_dir(name:String) -> FileSystemNode {
         FileSystemNode::Dir { name, child_nodes: vec![]}
-    }
-
-    pub fn new_file(name:String, size: u32) -> FileSystemNode {
-        FileSystemNode::File { name, size }
     }
 
     pub fn insert(&mut self, parent: &String ,node: &FileSystemNode) {
@@ -45,15 +44,17 @@ impl FileSystemNode {
                         parent = name.clone().to_string();
                         return c_node.get_parent(node_name.clone(), parent);
                     }
+                    "".to_string()
                 }
             FileSystemNode::File { name, size: _ }
                 => {
                     if *name == *node_name {
                     return parent;
+                    } else {
+                        "".to_string()
                     }
                 }, 
         } 
-        "".to_string()
     }
 }
 
@@ -61,7 +62,7 @@ pub fn build_and_process_fs(input: Vec<String>) -> u32 {
     let file_system = build_fs(input);
     let mut sum = 0;
     process_fs(&file_system,&mut sum);
-    sum
+    sum - size_files(&file_system)
 }
 
 fn build_fs(input: Vec<String>) -> FileSystemNode {
@@ -130,7 +131,7 @@ fn process_fs(fs: &FileSystemNode, sum: &mut u32) -> u32 {
             => {
                 for node in child_nodes {
                     process_fs(&**node, sum);               
-                    let num = size_dir(node);
+                    let num = size_dir(node); 
                     if num <=100000 {
                         *sum += num;
                     }
@@ -148,10 +149,23 @@ fn size_dir(fs: &FileSystemNode) -> u32 {
         FileSystemNode::Dir { name: _,child_nodes }
             => {
                 for node in child_nodes {
-                    total = size_dir(node);
+                    total += size_dir(node);
                 }
                 total
             },   
+        FileSystemNode::File { name: _ , size }
+            => *size 
+    }
+}
+
+fn size_files(fs: &FileSystemNode) -> u32 {
+    match fs {
+        FileSystemNode::Dir { name: _,child_nodes }
+               => child_nodes
+                    .iter()
+                    .map(|node| size_files(node))
+                    .filter(|&num| num<=100000)
+                    .sum::<u32>(),
         FileSystemNode::File { name: _ , size }
             => *size 
     }
@@ -169,7 +183,7 @@ mod tests {
                 Box::new(FileSystemNode::Dir { 
                     name: "brdsppd".to_string(),
                     child_nodes: vec![
-                        Box::new(FileSystemNode::new_file("abc.txt".to_string(),3000))
+                        Box::new(FileSystemNode::File {name: "abc.txt".to_string(),size: 3000})
                     ]
                 }),
                 Box::new(FileSystemNode::Dir {
@@ -191,33 +205,56 @@ mod tests {
             name: "/".to_string(),
             child_nodes: vec![
                 Box::new(FileSystemNode::Dir { 
-                    name: "brdsppd".to_string(),
+                    name: "a".to_string(),
                     child_nodes: vec![
-                        Box::new(FileSystemNode::new_file("abc.txt".to_string(),3000))
+                        Box::new(FileSystemNode::Dir {
+                            name:"e".to_string(),
+                            child_nodes: vec![
+                                Box::new(FileSystemNode::File {name: "i".to_string(), size: 584 })
+                            ]
+                        }),
+                        Box::new(FileSystemNode::File { name: "f".to_string(), size: 29116 }),
+                        Box::new(FileSystemNode::File { name: "g".to_string(), size: 2557 }),
+                        Box::new(FileSystemNode::File { name: "h.lst".to_string(), size: 62596 })
                         ]
                 }),
+                Box::new(FileSystemNode::File { name: "b.txt".to_string(), size: 14848514}),
+                Box::new(FileSystemNode::File { name: "c.dat".to_string(), size: 8504156}),
                 Box::new(FileSystemNode::Dir {
-                    name: "dnjqmzgg".to_string(),
-                    child_nodes: vec![] 
+                    name:"d".to_string(),
+                    child_nodes: vec![
+                        Box::new(FileSystemNode::File {name: "j".to_string(), size: 4060174 }),
+                        Box::new(FileSystemNode::File {name: "d.log".to_string(), size: 8033020 }),
+                        Box::new(FileSystemNode::File {name: "d.ext".to_string(), size: 5626152 }),
+                        Box::new(FileSystemNode::File {name: "k".to_string(), size: 7214296 })
+                    ]
                 }),
-                Box::new(FileSystemNode::File {
-                    name: "fmftdzrp.fwt".to_string(),
-                    size: 126880 
-                })
-                ] 
-        };
-        let fs_vec = vec!["$ cd /".to_string(),
-                                       "$ ls".to_string(),
-                                       "dir brdsppd".to_string(),
-                                       "dir dnjqmzgg".to_string(),
-                                       "126880 fmftdzrp.fwt".to_string(),
-                                       "$ cd brdsppd".to_string(),
-                                       "$ ls".to_string(),
-                                       "3000 abc.txt".to_string(),
-                                       "$ cd ..".to_string(),
-                                       "$ cd brdsppd".to_string(),
-                                      ];
-        assert_eq!(build_fs(fs_vec),result);
+        ]};
+        let fs_vec2 = vec!["$ cd /".to_string(),
+                           "$ ls".to_string(),
+                           "dir a".to_string(),
+                           "14848514 b.txt".to_string(),
+                           "8504156 c.dat".to_string(),
+                           "dir d".to_string(),
+                           "$ cd a".to_string(),
+                           "$ ls".to_string(),
+                           "dir e".to_string(),
+                           "29116 f".to_string(),
+                           "2557 g".to_string(),
+                           "62596 h.lst".to_string(),
+                           "$ cd e".to_string(),
+                           "$ ls".to_string(),
+                           "584 i".to_string(),
+                           "$ cd ..".to_string(),
+                           "$ cd ..".to_string(),
+                           "$ cd d".to_string(),
+                           "$ ls".to_string(),
+                           "4060174 j".to_string(),
+                           "8033020 d.log".to_string(),
+                           "5626152 d.ext".to_string(),
+                           "7214296 k".to_string()
+                           ];
+        assert_eq!(build_fs(fs_vec2),result);
     }
 
     #[test]
@@ -226,21 +263,31 @@ mod tests {
             name: "/".to_string(),
             child_nodes: vec![
                 Box::new(FileSystemNode::Dir { 
-                    name: "brdsppd".to_string(),
+                    name: "a".to_string(),
                     child_nodes: vec![
-                        Box::new(FileSystemNode::new_file("abc.txt".to_string(),3000))
+                        Box::new(FileSystemNode::Dir {
+                            name:"e".to_string(),
+                            child_nodes: vec![
+                                Box::new(FileSystemNode::File {name: "i".to_string(), size: 584 })
+                            ]
+                        }),
+                        Box::new(FileSystemNode::File { name: "f".to_string(), size: 29116 }),
+                        Box::new(FileSystemNode::File { name: "g".to_string(), size: 2557 }),
+                        Box::new(FileSystemNode::File { name: "h.lst".to_string(), size: 62596 })
+                        ]
+                }),
+                Box::new(FileSystemNode::File { name: "b.txt".to_string(), size: 14848514}),
+                Box::new(FileSystemNode::File { name: "c.dat".to_string(), size: 8504156}),
+                Box::new(FileSystemNode::Dir {
+                    name:"d".to_string(),
+                    child_nodes: vec![
+                        Box::new(FileSystemNode::File {name: "j".to_string(), size: 4060174 }),
+                        Box::new(FileSystemNode::File {name: "d.log".to_string(), size: 8033020 }),
+                        Box::new(FileSystemNode::File {name: "d.ext".to_string(), size: 5626152 }),
+                        Box::new(FileSystemNode::File {name: "k".to_string(), size: 7214296 })
                     ]
                 }),
-                Box::new(FileSystemNode::Dir {
-                    name: "dnjqmzgg".to_string(),
-                    child_nodes: vec![] 
-                }),
-                Box::new(FileSystemNode::File {
-                    name: "fmftdzrp.fwt".to_string(),
-                    size: 100000 
-                })
-                ] 
-        };
-        assert_eq!(process_fs(&fs, &mut 0),106000);
+        ]};
+        assert_eq!(process_fs(&fs, &mut 0) - size_files(&fs),95437);
     }
 }
