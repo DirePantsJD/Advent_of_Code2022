@@ -60,7 +60,7 @@ fn main() {
                   },
          "day8" => {
                    if part == "1" {println!("Result: {}",visible_trees(lines.clone()))}
-                   //if part == "2" {println!("Result: {}",start_of_message_offset(lines.clone()))}
+                   if part == "2" {println!("Result: {}",max_scenic_score(lines.clone()))}
                   },
         _ => (),
     }
