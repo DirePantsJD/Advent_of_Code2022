@@ -6,6 +6,7 @@ mod day5_2022;
 mod day6_2022;
 mod day7_2022;
 mod day8_2022;
+mod day9_2022;
 
 use std::{
     env,
@@ -21,6 +22,7 @@ use day5_2022::*;
 use day6_2022::*;
 use day7_2022::*;
 use day8_2022::*;
+use day9_2022::*;
 
 fn main() {
     let args: Vec<String> = env::args().collect();
@@ -61,6 +63,10 @@ fn main() {
          "day8" => {
                    if part == "1" {println!("Result: {}",visible_trees(lines.clone()))}
                    if part == "2" {println!("Result: {}",max_scenic_score(lines.clone()))}
+                  },
+        "day9" => {
+                   if part == "1" {println!("Result: {}",num_tail_positions(lines.clone()))}
+                   //if part == "2" {println!("Result: {}",max_scenic_score(lines.clone()))}
                   },
         _ => (),
     }
