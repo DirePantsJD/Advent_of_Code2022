@@ -37,8 +37,6 @@ pub fn draw_letters(input: Vec<String>) {
                 if draw_pos == 40 {
                     draw_pos = 0;
                 }
-                dbg!(draw_pos);
-                dbg!(sprite_pos);
                 if sprite_pos.abs_diff(draw_pos) <= 1  {
                     screen.push('#');
                 } else {
@@ -50,8 +48,6 @@ pub fn draw_letters(input: Vec<String>) {
                 if draw_pos == 40 {
                     draw_pos = 0;
                 }
-                dbg!(draw_pos);
-                dbg!(sprite_pos);
                 if sprite_pos.abs_diff(draw_pos) <= 1  {
                     screen.push('#');
                 } else {
@@ -61,8 +57,6 @@ pub fn draw_letters(input: Vec<String>) {
                 if draw_pos == 40 {
                     draw_pos = 0;
                 }
-                dbg!(draw_pos);
-                dbg!(sprite_pos);
                 if sprite_pos.abs_diff(draw_pos) <= 1  {
                     screen.push('#');
                 } else {
