@@ -58,8 +58,9 @@ fn main() {
                    if part == "1" {println!("Result: {}",start_of_packet_offset(lines.clone()))}
                    if part == "2" {println!("Result: {}",start_of_message_offset(lines.clone()))}
                   },
-        "day7" => { //todo
+        "day7" => {
                    if part == "1" {println!("Result: {}",build_and_process_fs(lines.clone()))}
+                   //todo
                    //if part == "2" {println!("Result: {}",start_of_message_offset(lines.clone()))}
                   },
          "day8" => {
@@ -68,11 +69,12 @@ fn main() {
                   },
         "day9" => {
                    if part == "1" {println!("Result: {}",num_tail_positions(lines.clone()))}
+                   //todo
                    if part == "2" {println!("Result: {}",num_tail_positions2(lines.clone()))}
                   },
         "day10"=> {
                    if part == "1" {println!("Result: {}",sum_signal_strengths(lines.clone()))}
-                   //if part == "2" {println!("Result: {}",num_tail_positions2(lines.clone()))}
+                   if part == "2" {draw_letters(lines.clone())}
                   },
         _ => (),
     }
