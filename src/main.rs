@@ -1,3 +1,5 @@
+mod day10_2022;
+mod day11_2022;
 mod day1_2022;
 mod day2_2022;
 mod day3_2022;
@@ -7,14 +9,9 @@ mod day6_2022;
 mod day7_2022;
 mod day8_2022;
 mod day9_2022;
-mod day10_2022;
 
-use std::{
-    env,
-    fs::File,
-    io::{prelude::*, BufReader},
-    path::Path,
-};
+use day10_2022::*;
+use day11_2022::*;
 use day1_2022::*;
 use day2_2022::*;
 use day3_2022::*;
@@ -24,7 +21,12 @@ use day6_2022::*;
 use day7_2022::*;
 use day8_2022::*;
 use day9_2022::*;
-use day10_2022::*;
+use std::{
+    env,
+    fs::File,
+    io::{prelude::*, BufReader},
+    path::Path,
+};
 
 fn main() {
     let args: Vec<String> = env::args().collect();
@@ -35,50 +37,104 @@ fn main() {
 
     match day.as_str() {
         "day1" => {
-                   if part == "1" {println!("Result: {}",most_calories(lines.clone()))};
-                   if part == "2" {println!("Result: {}",top_three_calories_sum(lines.clone()))}
-                  },
+            if part == "1" {
+                println!("Result: {}", most_calories(lines.clone()))
+            };
+            if part == "2" {
+                println!("Result: {}", top_three_calories_sum(lines.clone()))
+            }
+        }
         "day2" => {
-                   if part == "1" {println!("Result: {}",calculate_score1(lines.clone()))}
-                   if part == "2" {println!("Result: {}",calculate_score2(lines.clone()))}
-                  },
+            if part == "1" {
+                println!("Result: {}", calculate_score1(lines.clone()))
+            }
+            if part == "2" {
+                println!("Result: {}", calculate_score2(lines.clone()))
+            }
+        }
         "day3" => {
-                   if part == "1" {println!("Result: {}",sum_common_item_priority(lines.clone()))}
-                   if part == "2" {println!("Result: {}",sum_badge_priority(lines.clone()))}
-                  },
+            if part == "1" {
+                println!("Result: {}", sum_common_item_priority(lines.clone()))
+            }
+            if part == "2" {
+                println!("Result: {}", sum_badge_priority(lines.clone()))
+            }
+        }
         "day4" => {
-                   if part == "1" {println!("Result: {}",count_completly_redundant_ranges(lines.clone()))}
-                   if part == "2" {println!("Result: {}",count_partialy_redundant_ranges(lines.clone()))}
-                  },
+            if part == "1" {
+                println!(
+                    "Result: {}",
+                    count_completly_redundant_ranges(lines.clone())
+                )
+            }
+            if part == "2" {
+                println!("Result: {}", count_partialy_redundant_ranges(lines.clone()))
+            }
+        }
         "day5" => {
-                   if part == "1" {println!("Result: {}",top_of_stacks(lines.clone()))}
-                   if part == "2" {println!("Result: {}",v2_top_of_stacks(lines.clone()))}
-                  },
+            if part == "1" {
+                println!("Result: {}", top_of_stacks(lines.clone()))
+            }
+            if part == "2" {
+                println!("Result: {}", v2_top_of_stacks(lines.clone()))
+            }
+        }
         "day6" => {
-                   if part == "1" {println!("Result: {}",start_of_packet_offset(lines.clone()))}
-                   if part == "2" {println!("Result: {}",start_of_message_offset(lines.clone()))}
-                  },
+            if part == "1" {
+                println!("Result: {}", start_of_packet_offset(lines.clone()))
+            }
+            if part == "2" {
+                println!("Result: {}", start_of_message_offset(lines.clone()))
+            }
+        }
         "day7" => {
-                   if part == "1" {println!("Result: {}",build_and_process_fs(lines.clone()))}
-                   //todo
-                   //if part == "2" {println!("Result: {}",start_of_message_offset(lines.clone()))}
-                  },
-         "day8" => {
-                   if part == "1" {println!("Result: {}",visible_trees(lines.clone()))}
-                   if part == "2" {println!("Result: {}",max_scenic_score(lines.clone()))}
-                  },
+            if part == "1" {
+                println!("Result: {}", build_and_process_fs(lines.clone()))
+            }
+            //todo
+            //if part == "2" {println!("Result: {}",start_of_message_offset(lines.clone()))}
+        }
+        "day8" => {
+            if part == "1" {
+                println!("Result: {}", visible_trees(lines.clone()))
+            }
+            if part == "2" {
+                println!("Result: {}", max_scenic_score(lines.clone()))
+            }
+        }
         "day9" => {
-                   if part == "1" {println!("Result: {}",num_tail_positions(lines.clone()))}
-                   //todo
-                   if part == "2" {println!("Result: {}",num_tail_positions2(lines.clone()))}
-                  },
-        "day10"=> {
-                   if part == "1" {println!("Result: {}",sum_signal_strengths(lines.clone()))}
-                   if part == "2" {draw_letters(lines.clone())}
-                  },
+            if part == "1" {
+                println!("Result: {}", num_tail_positions(lines.clone()))
+            }
+            //todo
+            if part == "2" {
+                println!("Result: {}", num_tail_positions2(lines.clone()))
+            }
+        }
+        "day10" => {
+            if part == "1" {
+                println!("Result: {}", sum_signal_strengths(lines.clone()))
+            }
+            if part == "2" {
+                draw_letters(lines.clone())
+            }
+        }
+        "day11" => {
+            if part == "1" {
+                println!(
+                    "Result: {}",
+                    sum_of_two_max_monkey_inspections(lines.clone())
+                )
+            }
+            if part == "2" {
+                println!(
+                    "Result: {}",
+                    sum_of_two_max_monkey_inspections2(lines.clone())
+                )
+            }
+        }
         _ => (),
     }
-
 }
 
 fn lines_from_file(filename: impl AsRef<Path>) -> Vec<String> {
